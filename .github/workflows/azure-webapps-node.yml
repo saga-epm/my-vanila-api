@@ -18,10 +18,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
-          # scope: '@empowering-people-more'
-          # registry-url: 'https://npm.pkg.github.com'
-          # always-auth: true
-          # token: ${{ secrets.NPM_TOKEN }}
+          scope: '@empowering-people-more'
+          registry-url: 'https://npm.pkg.github.com'
+          always-auth: true
+          token: ${{ secrets.REPOSITORY_NPM_TOKEN }}
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile --ignore-engines
