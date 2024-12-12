@@ -2,7 +2,7 @@ import 'dotenv/config';
 import express, { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import routes from './routes/routes';
-//import { ExternalUser } from '@empowering-people-more/encompass-api-wrapper'
+import { ExternalUser } from '@empowering-people-more/encompass-api-wrapper'
 
 const app: express.Application = express();
 const port: number = Number(process.env.PORT) || 3005;
@@ -11,7 +11,7 @@ app.use(express.json());
 app.use('/api', routes);
 
 const user: any = {
-    "firstName": "sathish",
+    "firstName": "sathish GAJULA",
     id: '',
     useCompanyAddress: false,
     lastName: '',
