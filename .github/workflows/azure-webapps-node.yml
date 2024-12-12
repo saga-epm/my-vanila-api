@@ -24,7 +24,7 @@ jobs:
           # token: ${{ secrets.NPM_TOKEN }}
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install --frozen-lockfile --ignore-engines
 
       # - name: Build
       #   run: yarn run build
