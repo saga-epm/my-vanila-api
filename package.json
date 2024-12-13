@@ -21,6 +21,7 @@
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.7.2",
-    "yarn": "^1.22.22"
+    "yarn": "^1.22.22",
+    "@empowering-people-more/encompass-api-wrapper": "^1.1.24"
   }
 }
