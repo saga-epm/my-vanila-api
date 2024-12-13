@@ -20,11 +20,11 @@ jobs:
           node-version: '18.x'
           scope: '@empowering-people-more'
           registry-url: 'https://npm.pkg.github.com'
-          always-auth: true
+          always-auth: false
           token: ${{ secrets.REPOSITORY_NPM_TOKEN }}
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile --ignore-engines
+        run: yarn install #--frozen-lockfile --ignore-engines
 
       # - name: Build
       #   run: yarn run build
