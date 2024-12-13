@@ -23,6 +23,10 @@ jobs:
           always-auth: false
           token: ${{ secrets.REPOSITORY_NPM_TOKEN }}
 
+      - run: |
+          echo "@empowering-people-more:registry=https://npm.pkg.github.com" >> .npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.REPOSITORY_NPM_TOKEN }}" >> .npmrc
+
       - name: Install dependencies
         run: yarn install #--frozen-lockfile --ignore-engines
 
