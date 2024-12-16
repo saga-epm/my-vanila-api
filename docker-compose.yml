@@ -1,0 +1,37 @@
+version: '3.8'
+
+networks:
+  default:
+    driver: bridge
+
+services:
+  nodeapi:
+    container_name: vanila-api-container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - NODE_ENV=development
+      - SERVER_PORT=8000
+      - MONGO_URI=mongodb://mongo:27017/vanila
+    volumes:
+      - .:/usr/src/app
+    command: yarn dev
+    depends_on:
+      - mongo
+
+  mongo:
+    container_name: vanila-mongo-container
+    image: mongo:latest
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb:/data/db
+      - mongodb_config:/data/configdb
+
+volumes:
+  mongodb:
+  mongodb_config:
