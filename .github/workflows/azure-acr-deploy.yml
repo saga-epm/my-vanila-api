@@ -28,6 +28,12 @@ jobs:
           registry-url: 'https://npm.pkg.github.com'
           always-auth: false
           token: ${{ secrets.REPOSITORY_NPM_TOKEN }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.REPOSITORY_NPM_TOKEN }}
+
+      - run: |
+          echo "@empowering-people-more:registry=https://npm.pkg.github.com" >> .npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.REPOSITORY_NPM_TOKEN }}" >> .npmrc
           
       - name: 'Build and push image'
         uses: azure/docker-login@v1
