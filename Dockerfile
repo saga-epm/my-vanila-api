@@ -7,6 +7,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 COPY yarn.lock ./
 COPY .npmrc ./
+COPY .yarnrc.yml ./
 
 RUN yarn install
 

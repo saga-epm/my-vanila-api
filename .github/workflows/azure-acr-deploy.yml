@@ -37,6 +37,7 @@ jobs:
           password: ${{ secrets.REGISTRY_PASSWORD }}
           token: ${{ secrets.REPOSITORY_NPM_TOKEN }}
       - run: |
+            yarn config -v
             docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/vanilaapi:${{ github.sha }}
             docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/vanilaapi:${{ github.sha }}
 
