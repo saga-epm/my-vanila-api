@@ -19,7 +19,16 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-        
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          scope: '@empowering-people-more'
+          registry-url: 'https://npm.pkg.github.com'
+          always-auth: false
+          token: ${{ secrets.REPOSITORY_NPM_TOKEN }}
+          
       - name: 'Build and push image'
         uses: azure/docker-login@v1
         with:
