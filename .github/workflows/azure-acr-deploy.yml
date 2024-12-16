@@ -22,18 +22,7 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18.x'
-          scope: '@empowering-people-more'
-          registry-url: 'https://npm.pkg.github.com'
-          always-auth: false
-          token: ${{ secrets.REPOSITORY_NPM_TOKEN }}
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.REPOSITORY_NPM_TOKEN }}
-
+          
       - run: |
           echo "@empowering-people-more:registry=https://npm.pkg.github.com" >> .npmrc
           echo "//npm.pkg.github.com/:_authToken=${{ secrets.REPOSITORY_NPM_TOKEN }}" >> .npmrc
@@ -44,20 +33,27 @@ jobs:
           login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
-          token: ${{ secrets.REPOSITORY_NPM_TOKEN }}
+          
       - run: |
-            yarn config -v
             docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.APP_NAME }}:${{ github.sha }}
             docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.APP_NAME }}:${{ github.sha }}
+            
+  deploy:
+    runs-on: ubuntu-latest
 
-      - name: 'Deploy to Azure Container Instances'
-        uses: 'azure/aci-deploy@v1'
+    needs: build
+
+    environment:
+      name: 'development'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v3
         with:
-          resource-group: ${{ secrets.RESOURCE_GROUP }}
-          dns-name-label: ${{ secrets.RESOURCE_GROUP }}${{ github.run_number }}
-          image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.APP_NAME }}:${{ github.sha }}
-          registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-          registry-username: ${{ secrets.REGISTRY_USERNAME }}
-          registry-password: ${{ secrets.REGISTRY_PASSWORD }}
-          name: aci-vanilaapi
-          location: 'EastUS2'
+          app-name: 'my-vanila-api'
+          slot-name: 'Production'
+          package: .
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          images: ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.APP_NAME }}:${{ github.sha }}
