@@ -5,7 +5,8 @@ import routes from './routes/routes';
 import { ExternalUser } from '@empowering-people-more/encompass-api-wrapper'
 
 const app: express.Application = express();
-const port: number = Number(process.env.PORT) || 3005;
+const port: number = Number(process.env.SERVER_PORT);
+const env: string = process.env.NODE_ENV || 'undefined';
 
 app.use(express.json());
 app.use('/api', routes);
@@ -67,4 +68,5 @@ app.get('/', (req: Request, res: Response): void => {
 
 app.listen(port, (): void => {
     console.log(`Server is running on port ${port}`);
+    console.log(`Server is running on env ${env}`);
 });

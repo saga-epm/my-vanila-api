@@ -1,7 +1,7 @@
 FROM node:16-alpine AS baseimage
 
 # set working directory
-ENV NODE_ENV=production
+#ENV NODE_ENV=dev
 WORKDIR /usr/src/app
 
 COPY package*.json ./

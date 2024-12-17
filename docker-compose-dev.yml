@@ -1,4 +1,5 @@
-version: '3.8'
+# docker compose --env-file .env.dev up --build -d
+# Use this to pass the environment file to the docker compose
 
 networks:
   default:
@@ -7,15 +8,15 @@ networks:
 services:
   nodeapi:
     container_name: vanila-api-container
+    env_file:
+      # - .env
+      - ./config/dev.env
+      # - ./config/prod.env
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
-    environment:
-      - NODE_ENV=development
-      - SERVER_PORT=8000
-      - MONGO_URI=mongodb://mongo:27017/vanila
     volumes:
       - .:/usr/src/app
     command: yarn dev
