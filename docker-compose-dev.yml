@@ -8,10 +8,6 @@ networks:
 services:
   vanila-api:
     container_name: vanila-api-container
-    env_file:
-      # - .env
-      - ./config/dev.env
-      # - ./config/prod.env
     build:
       context: .
       dockerfile: Dockerfile
