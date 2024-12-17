@@ -6,7 +6,7 @@ networks:
     driver: bridge
 
 services:
-  nodeapi:
+  vanila-api:
     container_name: vanila-api-container
     env_file:
       # - .env
@@ -15,6 +15,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    image: vanila-api:latest
     ports:
       - "8000:8000"
     volumes:

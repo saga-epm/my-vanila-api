@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      APP_NAME: 'vanilaapi'
+      APP_NAME: 'vanila-api'
 
     steps:
       - name: Checkout source
