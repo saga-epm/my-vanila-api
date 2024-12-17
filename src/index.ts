@@ -12,7 +12,7 @@ app.use(express.json());
 app.use('/api', routes);
 
 const user: any = {
-    "firstName": "sathish GAJULA",
+    "firstName": "sathish Kumar GAJULA",
     id: '',
     useCompanyAddress: false,
     lastName: '',
