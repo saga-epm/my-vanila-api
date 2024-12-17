@@ -1,18 +1,18 @@
 name: Build and deploy Node.js app to Azure Web App - epmxtestapi
 
+env:
+  APP_NAME: 'vanila-api'
+  APP_SERVICE_NAME: 'vanilaapi'
+
 on:
   push:
     branches:
       - main
   workflow_dispatch:
-
+      
 jobs:
   build:
-    runs-on: ubuntu-latest
-
-    env:
-      APP_NAME: 'vanila-api'
-
+    runs-on: ubuntu-latest    
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
@@ -62,8 +62,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'my-vanila-api'
-          slot-name: 'Production'
-          #package: .
+          app-name: ${{ env.APP_SERVICE_NAME }}
+          slot-name: 'Production'          
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           images: ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.APP_NAME }}:${{ github.sha }}

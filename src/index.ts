@@ -63,10 +63,10 @@ const user: any = {
 };
 
 app.get('/', (req: Request, res: Response): void => {
-    res.send('Hello, My-Express-Api ' + user.firstName + '!');
+    res.send('Hello, My-Express-Api! ' + user.firstName + '!');
 });
 
 app.listen(port, (): void => {
-    console.log(`Server is running on port ${port}`);
-    console.log(`Server is running on env ${env}`);
+    console.log(`Server1 is running on port ${port}`);
+    console.log(`Server1 is running on env ${env}`);
 });
