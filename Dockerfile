@@ -8,7 +8,7 @@ COPY package*.json ./
 COPY yarn.lock ./
 COPY .npmrc ./
 COPY .yarnrc.yml ./
-COPY .config ./.config
+COPY .config ./
 
 RUN yarn install
 
