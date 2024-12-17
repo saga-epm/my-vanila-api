@@ -40,7 +40,7 @@ jobs:
       
       - name: Build docker image
         run: |
-            copy config/${{ secrets.ENVIRONMENT }}.env ./.env    
+            cp config/${{ secrets.ENVIRONMENT }}.env ./.env    
             docker compose -f docker-compose-${{ secrets.ENVIRONMENT }}.yml build
         
       - name: Push Docker image to Azure Container Registry
