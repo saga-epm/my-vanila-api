@@ -1,10 +1,6 @@
 # docker compose --env-file .env.dev up --build -d
 # Use this to pass the environment file to the docker compose
 
-networks:
-  default:
-    driver: bridge
-
 services:
   nodeapi:
     container_name: vanila-api-container
