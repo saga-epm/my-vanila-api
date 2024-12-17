@@ -42,7 +42,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          file: ./docker-compose.yml 
+          file: ./docker-compose-dev.yml 
           push: true
           tags: |
             ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.APP_NAME }}:latest
