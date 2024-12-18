@@ -13,9 +13,9 @@ services:
       dockerfile: Dockerfile
     image: vanila-api:latest
     ports:
-      - "8000:8000"
+      - "4000:3000"
     volumes:
-      - .:/usr/src/app
+      - .:/app
     command: yarn dev
     depends_on:
       - mongo

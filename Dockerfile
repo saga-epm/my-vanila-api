@@ -1,19 +1,18 @@
 FROM node:16-alpine AS baseimage
 
 # set working directory
-#ENV NODE_ENV=dev
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY package*.json ./
-COPY yarn.lock ./
-COPY .npmrc ./
-COPY .yarnrc.yml ./
-COPY config/ ./config
+COPY package*.json /app
+COPY .npmrc /app
+COPY config/ /app/config
 
 RUN yarn install
 
-COPY . .
+COPY . /app
 
-#EXPOSE 5122
+# Expose application port
+ENV SERVER_PORT 3000
+EXPOSE 3000
 
-CMD [ "yarn", "dev" ]
+CMD ["yarn", "dev"]
