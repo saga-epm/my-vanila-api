@@ -10,6 +10,7 @@ const env: string = process.env.NODE_ENV || 'undefined';
 
 app.use(express.json());
 app.use('/api', routes);
+console.log('process.env', process.env);
 
 const user: any = {
     "firstName": process.env.ENV_NAME || 'undefined',
