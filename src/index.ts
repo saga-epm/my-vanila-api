@@ -64,7 +64,8 @@ const user: any = {
 };
 
 app.get('/', (req: Request, res: Response): void => {
-    res.send('Hello, My-Express-Api! ' + user.firstName + '!');
+    console.log('process.env', process.env);
+    res.send('Hello, My-Vanila-Api! ' + user.firstName + '!');
 });
 
 app.listen(port, (): void => {
