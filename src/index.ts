@@ -12,7 +12,7 @@ app.use(express.json());
 app.use('/api', routes);
 
 const user: any = {
-    "firstName": "sathish Kumar GAJULA",
+    "firstName": process.env.name || 'undefined',
     id: '',
     useCompanyAddress: false,
     lastName: '',
