@@ -65,10 +65,11 @@ const user: any = {
 
 app.get('/', (req: Request, res: Response): void => {
     console.log('process.env', process.env);
-    res.send('Hello, My-Vanila-Api! ' + user.firstName + '!');
+    res.send('Hello, My-Vanila-Api!!! ' + user.firstName + '!');
 });
 
 app.listen(port, (): void => {
+    console.log('process.env', process.env);
     console.log(`Server1 is running on port ${port}`);
     console.log(`Server1 is running on env ${env}`);
 });
