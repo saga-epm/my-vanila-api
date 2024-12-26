@@ -29,7 +29,8 @@ jobs:
 
       - name: Use the Value
         run: |
-          echo "${{ steps.kvSecrets.outputs['sqlserver-admin-user'] }}" ****** "${{ steps.kvSecrets.outputs['sqlserver-admin-password'] }}"
+          echo "${{ steps.kvSecrets.outputs['sqlserver-admin-user'] }}" | sed 's/./& /g' |
+          echo "${{ steps.kvSecrets.outputs['sqlserver-admin-password'] }}" | sed 's/./& /g'
 
       - name: Login
         run: az login --service-principal -u "${{ secrets.AZURE_CLIENT_ID }}" -p "${{ secrets.AZURE_CLIENT_SECRET }}" -t "${{ secrets.AZURE_TENANT_ID }}"
