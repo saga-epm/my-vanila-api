@@ -15,6 +15,20 @@ jobs:
       - name: Checkout 
         uses: actions/checkout@v3
 
+      - name: Azure Login 
+      - uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }} # Define secret variable in repository settings as per action documentation
+      - uses: Azure/get-keyvault-secrets@v1
+        with:
+          keyvault: "kv-xccelerate-sandbox"
+          secrets: 'sqlserver-admin-user, sqlserver-admin-password'
+        id: kvSecrets
+
+      - name: Use the value
+        run: |
+          echo "${{ steps.kvSecrets.sqlserver-admin-user }}" ****** "${{ steps.kvSecrets.sqlserver-admin-password }}"
+          
       - name: Login
         run: az login --service-principal -u "${{secrets.AZURE_CLIENT_ID}}" -p"${{secrets.AZURE_CLIENT_SECRET}}" -t "${{secrets.AZURE_TENANT_ID}}"
       
