@@ -1,0 +1,28 @@
+# print secrets
+
+name: secrets 
+
+on:
+  workflow_dispatch:
+
+jobs:
+  # login to azure and deploy resources
+  view-secrets:
+    name: View Secrets
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout 
+        uses: actions/checkout@v3
+
+      - name: View Secrets Context
+        shell: bash
+        run: echo "$SECRETS_CONTEXT"
+        env:
+          SECRETS_CONTEXT: ${{ toJson(secrets) }}
+    
+      - name: View Variables Context
+        shell: bash
+        run: echo "$VARS_CONTEXT"
+        env:
+          SECRETS_CONTEXT: ${{ toJson(vars) }}
