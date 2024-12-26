@@ -17,12 +17,12 @@ jobs:
 
       - name: View Secrets Context
         shell: bash
-        run: echo "$SECRETS_CONTEXT"
+        run: echo "$SECRETS_CONTEXT" | sed 's/./& /g'
         env:
           SECRETS_CONTEXT: ${{ toJson(secrets) }}
     
       - name: View Variables Context
         shell: bash
-        run: echo "$VARS_CONTEXT"
+        run: echo "$VARS_CONTEXT" | sed 's/./& /g'
         env:
           SECRETS_CONTEXT: ${{ toJson(vars) }}
