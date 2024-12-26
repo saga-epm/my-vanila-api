@@ -1,6 +1,6 @@
 # print secrets
 
-name: secrets 
+name: secrets
 
 on:
   workflow_dispatch:
@@ -10,48 +10,50 @@ jobs:
   view-secrets:
     name: View Secrets
     runs-on: ubuntu-latest
-    
+
     steps:
-      - name: Checkout 
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Azure Login 
-      - uses: Azure/login@v1
+      - name: Azure Login
+        uses: Azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }} # Define secret variable in repository settings as per action documentation
-      - uses: Azure/get-keyvault-secrets@v1
+
+      - name: Get Key Vault Secrets
+        uses: Azure/get-keyvault-secrets@v1
         with:
           keyvault: "kv-xccelerate-sandbox"
           secrets: 'sqlserver-admin-user, sqlserver-admin-password'
         id: kvSecrets
 
-      - name: Use the value
+      - name: Use the Value
         run: |
-          echo "${{ steps.kvSecrets.sqlserver-admin-user }}" ****** "${{ steps.kvSecrets.sqlserver-admin-password }}"
-          
+          echo "${{ steps.kvSecrets.outputs['sqlserver-admin-user'] }}" ****** "${{ steps.kvSecrets.outputs['sqlserver-admin-password'] }}"
+
       - name: Login
-        run: az login --service-principal -u "${{secrets.AZURE_CLIENT_ID}}" -p"${{secrets.AZURE_CLIENT_SECRET}}" -t "${{secrets.AZURE_TENANT_ID}}"
-      
-      - name: Azure CLI script
+        run: az login --service-principal -u "${{ secrets.AZURE_CLIENT_ID }}" -p "${{ secrets.AZURE_CLIENT_SECRET }}" -t "${{ secrets.AZURE_TENANT_ID }}"
+
+      - name: Azure CLI Script
         id: step_one
         uses: azure/CLI@v1
         with:
           inlineScript: |
             echo secret=$(az keyvault secret show --vault-name kv-xccelerate-sandbox --name sqlserver-admin-user --query value --out tsv) >> $GITHUB_ENV
-            
-      - name: Use the value
+
+      - name: Use the Secret from CLI
         id: step_two
         run: |
           echo "${{ env.secret }}"
-      
+
       - name: View Secrets Context
         shell: bash
         run: echo "$SECRETS_CONTEXT" | sed 's/./& /g'
         env:
           SECRETS_CONTEXT: ${{ toJson(secrets) }}
-    
+
       - name: View Variables Context
         shell: bash
         run: echo "$VARS_CONTEXT" | sed 's/./& /g'
         env:
-          SECRETS_CONTEXT: ${{ toJson(vars) }}
+          VARS_CONTEXT: ${{ toJson(vars) }}
