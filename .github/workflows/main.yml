@@ -5,6 +5,9 @@ name: secrets
 on:
   workflow_dispatch:
 
+env:
+  foo: 'fooboo'
+  
 jobs:
   # login to azure and deploy resources
   view-secrets:
@@ -15,6 +18,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Test Job
+        run: |
+          echo ${{env.foo}}
+          echo ${{env.foo}}replace(${{env.foo}}, 'boo', 'boo')
+      
       - name: Azure Login
         uses: Azure/login@v1
         with:
