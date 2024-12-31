@@ -1,5 +1,8 @@
 name: Workflow Test
 
+env:
+  GLOBAL_VAR: 'GlobalValue' # Global environment variable accessible to all jobs and steps
+
 on:
   workflow_call:
     inputs:
@@ -8,9 +11,6 @@ on:
           type: string
           description: 'Instance to plan the infrastructure'
 
-env:
-  foo: 'foo'
-  instance: ${{ inputs.instance }}
   
 jobs:
   azure-login:
@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-      RESOURCE_GROUP: '${{ inputs.instance }}-${{ inputs.instance }}'
+      RESOURCE_GROUP: '${{ GLOBAL_VAR }}-${{ inputs.instance }}'
       
     steps:
       - name: Checkout
