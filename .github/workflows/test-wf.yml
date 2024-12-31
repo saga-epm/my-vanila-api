@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-      RESOURCE_GROUP: '${{ env.foo }}-${{ env.instance }}'
+      RESOURCE_GROUP: '${{ inputs.instance }}-${{ inputs.instance }}'
       
     steps:
       - name: Checkout
