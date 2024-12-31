@@ -15,8 +15,8 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-      RESOURCE_GROUP: '${{inputs.instance}}'
-      FOO: 'bar$inputs.instance'
+      FOO: 'foo$inputs.instance'
+      BOO: 'boo$env.FOO'
       
     steps:
       - name: Checkout
@@ -25,8 +25,7 @@ jobs:
       - name: View Secrets Context
         shell: bash
         run: |
-          echo "Foo:" $RESOURCE_GROUP
           echo "Foo:" $FOO
-          echo "Foo:" $env.FOO
-          echo "Foo:" $env.RESOURCE_GROUP
+          echo "Foo:" $BOO
+          
         
