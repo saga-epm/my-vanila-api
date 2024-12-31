@@ -1,8 +1,5 @@
 name: Workflow Test
 
-env:
-  GLOBAL_VAR: 'GlobalValue' # Global environment variable accessible to all jobs and steps
-
 on:
   workflow_call:
     inputs:
@@ -18,7 +15,8 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-      RESOURCE_GROUP: '${{env.GLOBAL_VAR}}-${{inputs.instance}}'
+      RESOURCE_GROUP: '${{inputs.instance}}'
+      FOO: 'bar$inputs.instance'
       
     steps:
       - name: Checkout
@@ -26,5 +24,8 @@ jobs:
 
       - name: View Secrets Context
         shell: bash
-        run: echo "Foo:" $RESOURCE_GROUP
+        run: |
+          echo "Foo:" $RESOURCE_GROUP
+          echo "Foo:" $env.FOO
+          echo "Foo:" $env.RESOURCE_GROUP
         
