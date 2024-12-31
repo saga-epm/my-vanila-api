@@ -15,8 +15,8 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-      FOO: 'foo$inputs.instance'
-      BOO: 'boo$env.FOO'
+      FOO: 'foo${{inputs.instance}}'
+      BOO: 'boo${{env.FOO}}'
       
     steps:
       - name: Checkout
