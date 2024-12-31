@@ -16,7 +16,7 @@ jobs:
     
     env:
       FOO: 'foo${{inputs.instance}}'
-      BOO: 'boo${{FOO}}'
+      BOO: 'boo$FOO'
       
     steps:
       - name: Checkout
