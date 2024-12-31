@@ -26,6 +26,7 @@ jobs:
         shell: bash
         run: |
           echo "Foo:" $RESOURCE_GROUP
+          echo "Foo:" $FOO
           echo "Foo:" $env.FOO
           echo "Foo:" $env.RESOURCE_GROUP
         
