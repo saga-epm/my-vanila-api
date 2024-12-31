@@ -1,0 +1,21 @@
+name: test Env Terraform Plan
+
+on: 
+    workflow_dispatch:
+
+# permissions on workflow uses id-token: write.
+# You won't be able to request the OIDC JWT ID token if the permissions setting for id-token is set to read or none.
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+
+jobs:
+  # login to azure and plan deployment of resources
+  test-wf:
+    name: Test
+    uses: ./.github/workflows/test-wf.yml
+    with:
+        instance: '001'
+    secrets: inherit
+    

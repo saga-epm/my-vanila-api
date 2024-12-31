@@ -1,0 +1,31 @@
+name: Workflow Test
+
+on:
+  workflow_call:
+    inputs:
+      instance:
+          required: true
+          type: string
+          description: 'Instance to plan the infrastructure'
+
+env:
+  instance: 'instance${{ inputs.instance }}'
+  instancenbr: ${{ inputs.instance }}
+
+jobs:
+  azure-login:
+    name: Resources Plan Validation
+    runs-on: ubuntu-latest
+    
+    env:
+      RESOURCE_GROUP: '${{ env.foo }}-${{ env.instance }}'
+      STORAGE_ACCOUNT: '${{ env.foo }}${{ env.instancenbr }}'
+      
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: View Secrets Context
+        shell: bash
+        run: echo "Foo:" $RESOURCE_GROUP
+        
