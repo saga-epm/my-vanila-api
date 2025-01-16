@@ -13,6 +13,9 @@ COPY . /app
 
 # Expose application port
 ENV SERVER_PORT 3000
+ENV NODE_ENV development
+ENV ENV_NAME local
+
 EXPOSE 3000
 
 CMD ["yarn", "dev"]
