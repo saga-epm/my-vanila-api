@@ -1,4 +1,4 @@
-FROM node:16-alpine AS baseimage
+FROM node:18-alpine AS baseimage
 
 # set working directory
 WORKDIR /app
