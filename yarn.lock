@@ -9,15 +9,6 @@
   dependencies:
     "@jridgewell/trace-mapping" "0.3.9"
 
-"@empowering-people-more/encompass-api-wrapper@^1.1.24":
-  version "1.1.24"
-  resolved "https://npm.pkg.github.com/download/@empowering-people-more/encompass-api-wrapper/1.1.24/dcce7cce9d63d5bf2e055aad865a23e8894cf17e#dcce7cce9d63d5bf2e055aad865a23e8894cf17e"
-  integrity sha512-pNKtm+B38SaKTmAYTLnNvAggzdSWajXTs9/B1RDnCoc1CdvMrUB4l6+Oo9N9D6FTgfbMICxON9iF7PEtNYRhkw==
-  dependencies:
-    axios "^1.6.3"
-    joi "^17.11.0"
-    qs "^6.11.2"
-
 "@hapi/hoek@^9.0.0", "@hapi/hoek@^9.3.0":
   version "9.3.0"
   resolved "https://registry.yarnpkg.com/@hapi/hoek/-/hoek-9.3.0.tgz#8368869dcb735be2e7f5cb7647de78e167a251fb"
