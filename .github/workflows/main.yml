@@ -13,7 +13,6 @@ jobs:
   manual-approval:
     name: Manual Approval
     runs-on: ubuntu-latest
-    needs: terraform-plan
     if: success() # Only proceed if terraform-plan job succeeds
     
     permissions:
