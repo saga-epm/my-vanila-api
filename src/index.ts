@@ -17,7 +17,7 @@ console.log('process.env.ENV_NAME', process.env.ENV_NAME);
 
 app.get('/', (req: Request, res: Response): void => {
     //console.log('process.env', process.env);
-    res.send('Hello, My-Vanila-Api!');
+    res.send('Hello Staging, My-Vanila-Api!');
 });
 
 app.listen(port, (): void => {
