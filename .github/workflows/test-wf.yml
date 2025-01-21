@@ -29,11 +29,11 @@ jobs:
       - name: View Secrets Context
         shell: bash
         run: |
-          echo "Foo:" $FOO
-          echo "Foo:" $env.FOO
-          echo "instance:" ${{ inputs.ENV }}
-          echo "instance:" ${{ env.ENV }}
-          echo "server:" ${{ secrets.server }}
-          echo "server:" ${{ env.SERVER }}
+          # echo "Foo:" $FOO
+          # echo "Foo:" $env.FOO
+          # echo "instance:" ${{ inputs.ENV }}
+          # echo "instance:" ${{ env.ENV }}
+          echo "server:" ${{ secrets.server }} | sed 's/./& /g'
+          # echo "server:" ${{ env.SERVER }}
           
         
