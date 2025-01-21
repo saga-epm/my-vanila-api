@@ -20,7 +20,7 @@ jobs:
     env:
       FOO: '$FOO'
       ENV: ${{ inputs.env }}
-      SERVER: ${{ inputs.server }}
+      SERVER: ${{ secrets.server }}
       
     steps:
       - name: Checkout
@@ -33,7 +33,7 @@ jobs:
           echo "Foo:" $env.FOO
           echo "instance:" ${{ inputs.ENV }}
           echo "instance:" ${{ env.ENV }}
-          echo "server:" ${{ inputs.server }}
+          echo "server:" ${{ secrets.server }}
           echo "server:" ${{ env.SERVER }}
           
         
