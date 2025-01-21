@@ -3,15 +3,14 @@ name: Workflow Test
 on:
   workflow_call:
     inputs:
-      instance:
+      env:
           required: true
           type: string
-          description: 'Instance to plan the infrastructure'
+          description: 'Env Value'
+    secrets:
       server:
-          required: true
-          type: string
-          description: 'Server to login to'
-
+        required: true        
+        description: 'Server to login to'
   
 jobs:
   azure-login:
@@ -20,7 +19,7 @@ jobs:
     
     env:
       FOO: '$FOO'
-      INSTANCE: ${{ inputs.instance }}
+      ENV: ${{ inputs.env }}
       SERVER: ${{ inputs.server }}
       
     steps:
@@ -32,8 +31,8 @@ jobs:
         run: |
           echo "Foo:" $FOO
           echo "Foo:" $env.FOO
-          echo "instance:" ${{ inputs.instance }}
-          echo "instance:" ${{ env.INSTANCE }}
+          echo "instance:" ${{ inputs.ENV }}
+          echo "instance:" ${{ env.ENV }}
           echo "server:" ${{ inputs.server }}
           echo "server:" ${{ env.SERVER }}
           

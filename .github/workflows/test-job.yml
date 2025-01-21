@@ -13,10 +13,10 @@ permissions:
 jobs:
   # login to azure and plan deployment of resources
   test-wf:
-    name: Test
-    uses: ./.github/workflows/test-wf.yml
+    name: Test    
+    uses: ./.github/workflows/test-wf.yml    
     with:
-        instance: '001'
-        server: '${{ secrets.REGISTRY_LOGIN_SERVER }}'
-    secrets: inherit
+      env: 'test'
+    secrets:
+      server: '${{ secrets.REGISTRY_LOGIN_SERVER }}'
     
