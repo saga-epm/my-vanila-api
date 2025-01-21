@@ -16,7 +16,8 @@ jobs:
   azure-login:
     name: Resources Plan Validation
     runs-on: ubuntu-latest
-    
+    environment: ${{ inputs.environment }}
+
     env:
       FOO: '$FOO'
       ENV: ${{ inputs.environment }}
@@ -29,7 +30,7 @@ jobs:
       - name: View Secrets Context
         shell: bash
         run: |
-          # echo "Foo:" $FOO
+          # echo "Fooo:" $FOO
           # echo "Foo:" $env.FOO
           # echo "instance:" ${{ inputs.ENV }}
           # echo "instance:" ${{ env.ENV }}
