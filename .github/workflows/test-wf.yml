@@ -3,7 +3,7 @@ name: Workflow Test
 on:
   workflow_call:
     inputs:
-      env:
+      environment:
           required: true
           type: string
           description: 'Env Value'
@@ -19,7 +19,7 @@ jobs:
     
     env:
       FOO: '$FOO'
-      ENV: ${{ inputs.env }}
+      ENV: ${{ inputs.environment }}
       SERVER: ${{ secrets.server }}
       
     steps:
