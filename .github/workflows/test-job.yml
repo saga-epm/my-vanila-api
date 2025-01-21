@@ -17,5 +17,6 @@ jobs:
     uses: ./.github/workflows/test-wf.yml
     with:
         instance: '001'
+        server: '${{ secrets.REGISTRY_LOGIN_SERVER }}'
     secrets: inherit
     

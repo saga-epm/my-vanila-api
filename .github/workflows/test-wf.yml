@@ -7,6 +7,10 @@ on:
           required: true
           type: string
           description: 'Instance to plan the infrastructure'
+      server:
+          required: true
+          type: string
+          description: 'Server to login to'
 
   
 jobs:
@@ -15,8 +19,9 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-      FOO: 'foo${{inputs.instance}}'
-      BOO: 'boo$FOO'
+      FOO: '$FOO'
+      INSTANCE: ${{ inputs.instance }}
+      SERVER: ${{ inputs.server }}
       
     steps:
       - name: Checkout
@@ -26,6 +31,10 @@ jobs:
         shell: bash
         run: |
           echo "Foo:" $FOO
-          echo "Foo:" $BOO
+          echo "Foo:" $env.FOO
+          echo "instance:" ${{ inputs.instance }}
+          echo "instance:" ${{ env.INSTANCE }}
+          echo "server:" ${{ inputs.server }}
+          echo "server:" ${{ env.SERVER }}
           
         
