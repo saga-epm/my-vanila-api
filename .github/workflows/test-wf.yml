@@ -50,7 +50,7 @@ jobs:
 
     steps:
       - name: Process
-        if: ${{ vars.process }} != 'true'
+        if: ${{vars.process != 'true'}}        
         run: |
           echo "Process Failed:" ${{ vars.process }}
           exit 1
@@ -60,7 +60,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     needs: check-step
-    if: ${{ vars.process }} == 'true'
+    if: ${{vars.process == 'true'}}
 
     steps:
       - name: Process        
