@@ -18,5 +18,5 @@ jobs:
     with:
       env: 'test'
     secrets:
-      server: '${{ secrets.REGISTRY_LOGIN_SERVER }}'
+      server: '${{ secrets.REGISTRY_LOGIN_SERVER_ENV }}'
     
