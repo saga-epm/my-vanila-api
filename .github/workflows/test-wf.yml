@@ -14,55 +14,44 @@ on:
   
 jobs:
 
-  azure-login:
-    name: Validation
-    runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }}
+  # azure-login:
+  #   name: Validation
+  #   runs-on: ubuntu-latest
+  #   environment: ${{ inputs.environment }}
    
-    env:
-      SERVER: ${{ secrets.server }}
+  #   env:
+  #     SERVER: ${{ secrets.server }}
       
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
 
-      - name: Process
-        if: ${{vars.process == 'true'}}
-        run: |
-          echo "Validation-Process:" ${{ vars.process }}
+  #     - name: Process
+  #       if: ${{vars.process == 'true'}}
+  #       run: |
+  #         echo "Validation-Process:" ${{ vars.process }}
      
-  check-step:
+  step1:
     name: step1
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
-    needs: azure-login
-
+    
     steps:
-      # - name: Process1
-      #   if: ${{vars.process == true}}
-      #   run: |
-      #     echo "Process 1:" ${{ vars.process }}
-      # - name: Process2
-      #   if: ${{vars.process != 'true'}}
-      #   run: |
-      #     echo "Process 2:" ${{ vars.process }}
-      #     exit 1
-      - name: Process3
+      - name: ProcessStep1
         if: ${{vars.process == 'true'}}
         run: |
-          echo "Process 3:" ${{ vars.process }}
+          echo "Step1 Process:" ${{ vars.process }}
 
-  re-process-step:
-    name: Re-Process Step
+  Step2:
+    name: Step2
+    if: ${{vars.process == 'true'}}
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
-    needs: check-step
-    continue-on-error: true
-    #if: ${{vars.process == 'true'}}
+    needs: Step1
+    #continue-on-error: true    
 
     steps:
       - name: Process        
         run: |
-          echo "Re-Process Step:" ${{ vars.process }}
-          
+          echo "Step2 Process:" ${{ vars.process }}
         
