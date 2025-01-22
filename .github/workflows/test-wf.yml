@@ -49,11 +49,17 @@ jobs:
     needs: build
     steps:      
       - name: Create Env Variable (${{ github.repository }})
-        run: echo "GITHUB_PROCESS_SHA=PROCESS_$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
+        run: |
+          echo "GITHUB_PROCESS_SHA=PROCESS_$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
+          echo "-------------"
+          echo $GITHUB_PROCESS_SHA
+          echo "-------------"
+          echo $GITHUB_SHA
+          echo "-------------"
       - name: Update environment variables 
         shell: bash
         run: |
-          response=$(curl --location 'https://api.github.com/repos/${{github.repository}}/environments/${{inputs.environment}}/variables/${{GITHUB_PROCESS_SHA}}' \
+          response=$(curl --location 'https://api.github.com/repos/${{github.repository}}/environments/${{inputs.environment}}/variables/$GITHUB_PROCESS_SHA' \
             --header 'Accept: application/vnd.github+json' \
             --header 'Authorization: Bearer ${{ secrets.token }}' \
             --header 'X-GitHub-Api-Version: 2022-11-28')
