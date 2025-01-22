@@ -31,19 +31,19 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Set env
-      run: echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
+      run: echo "GITHUB_SHA_SHORT=PROCESS_$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
     - name: Test
       run: echo $GITHUB_SHA_SHORT
     - name: Update environment variables - ${{ github.repository }} and owner - ${{ github.repository_owner }}
       #if: ${{inputs.type_var_sec == 'environment' && inputs.type_of_input == 'variable'}}
       shell: bash
       run: |
-        curl --location 'https://api.github.com/repos/saga-epm/my-vanila-api/environments/test/variables' \
+        curl --location 'https://api.github.com/repos/${{github.repository}}/environments/${{inputs.environment}}/variables' \
         --header 'Accept: application/vnd.github+json' \
         --header 'Authorization: Bearer ${{ secrets.token }}' \
         --header 'X-GitHub-Api-Version: 2022-11-28' \
         --header 'Content-Type: application/json' \
-        --data '{"name":"USERNAME1","value":"octocat"}'
+        --data '{"name":"'$GITHUB_SHA_SHORT'","value":"'${{ inputs.value }}'"}'
 
         # curl -L \
         #   -X PATCH \
