@@ -57,12 +57,7 @@ jobs:
             --header 'X-GitHub-Api-Version: 2022-11-28')
 
           echo $(echo $response | jq -r '.name')
-          #echo "GITHUB_PROCESS_SHA_NEW=$(echo $response | jq -r '.name')" >> $GITHUB_ENV
-          #echo "GITHUB_PROCESS_SHA_VALUE=$GITHUB_PROCESS_SHA_NEW"
-          #echo "GITHUB_PROCESS_SHA_VALUE=${{GITHUB_PROCESS_SHA_NEW}}"
-          # PUBLIC_KEY=$(echo $response | jq -r '.name')          
-          # echo "PUBLIC_KEY=$PUBLIC_KEY" >> $GITHUB_ENV
-
+          
       - name: ProcessStep1
         #if: ${{vars.process != 'process'}}
         run: |
