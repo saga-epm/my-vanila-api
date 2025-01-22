@@ -43,7 +43,7 @@ jobs:
         --header 'Authorization: Bearer ${{ secrets.token }}' \
         --header 'X-GitHub-Api-Version: 2022-11-28' \
         --header 'Content-Type: application/json' \
-        --data '{"name":"'$GITHUB_PROCESS_SHA'","value":"'${{ inputs.value }}'"}'
+        --data '{"name":"'PROCESS_$(echo $GITHUB_SHA | cut -c 1-6)'","value":"'${{ inputs.value }}'"}'
         
   deploy:
     name: Get Env Variable (${{ github.repository }})
@@ -52,9 +52,7 @@ jobs:
     needs: build
     steps:      
       - uses: actions/checkout@v2
-      - name: Create Env Variable (${{ github.repository }})
-        run: echo "GITHUB_PROCESS_SHA=PROCESS_$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
-      - name: Update environment variables 
+      - name: Get Environment variables
         shell: bash
         run: |
           echo "--------------------"
