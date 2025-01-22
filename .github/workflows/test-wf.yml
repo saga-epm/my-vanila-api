@@ -56,11 +56,7 @@ jobs:
         id: stepget
         shell: bash
         run: |
-          echo "--------------------"
-          echo ${{github.sha}}
-          echo "--------------------"
-          echo $GITHUB_SHA
-          echo "--------------------"
+          
           response=$(curl --location 'https://api.github.com/repos/${{github.repository}}/environments/${{inputs.environment}}/variables/PROCESS_${{github.sha}}' \
             --header 'Accept: application/vnd.github+json' \
             --header 'Authorization: Bearer ${{ secrets.token }}' \
@@ -83,6 +79,14 @@ jobs:
         if: ${{steps.stepget.outputs.foo-key == 'process'}}
         run: |
           echo "Process Success:" ${{ vars.process }}
+      - name: CleanupProcess
+        shell: bash
+        run: |
+          curl --location 'https://api.github.com/repos/${{github.repository}}/environments/${{inputs.environment}}/variables/PROCESS_${{github.sha}}' \
+          --header 'Accept: application/vnd.github+json' \
+          --header 'Authorization: Bearer ${{ secrets.token }}' \
+          --header 'X-GitHub-Api-Version: 2022-11-28' \
+          --X DELETE \          
 
   # Step2:
   #   name: Step2    
