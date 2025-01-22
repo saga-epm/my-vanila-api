@@ -50,9 +50,10 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     needs: build
-    steps:      
-      - uses: actions/checkout@v2
+    steps:            
+      - uses: actions/checkout@v2      
       - name: Get Environment variables
+        id: stepget
         shell: bash
         run: |
           echo "--------------------"
@@ -67,10 +68,12 @@ jobs:
 
           echo $response
           echo $response | jq -r '.value'
+          echo "NODE_ENV=production" >> $GITHUB_ENV
+          echo "foo-key=$response | jq -r '.value'" >> $GITHUB_OUTPUT
       - name: ProcessStep1
         #if: ${{vars.process != 'process'}}
         run: |
-          echo "Step1 Process:" #$GITHUB_PROCESS_SHA_VALUE
+          echo "Step1 Process:" ${{steps.stepget.outputs.foo-key}}
           #exit 1
       - name: ProcessStep2
         #if: ${{vars.process == 'process'}}
