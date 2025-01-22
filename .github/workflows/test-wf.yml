@@ -35,6 +35,12 @@ jobs:
     - name: Update environment variables 
       shell: bash
       run: |
+        echo "--------------------"
+        echo ${{github.sha}}
+        echo "--------------------"
+        echo $GITHUB_SHA
+        echo "--------------------" 
+
         curl --location 'https://api.github.com/repos/${{github.repository}}/environments/${{inputs.environment}}/variables' \
         --header 'Accept: application/vnd.github+json' \
         --header 'Authorization: Bearer ${{ secrets.token }}' \
@@ -59,13 +65,13 @@ jobs:
           echo "--------------------"
           echo $GITHUB_SHA
           echo "--------------------"
-          response=$(curl --location 'https://api.github.com/repos/${{github.repository}}/environments/${{inputs.environment}}/variables/${{github.sha}}' \
+          response=$(curl --location 'https://api.github.com/repos/${{github.repository}}/environments/${{inputs.environment}}/variables/FOO' \
             --header 'Accept: application/vnd.github+json' \
             --header 'Authorization: Bearer ${{ secrets.token }}' \
             --header 'X-GitHub-Api-Version: 2022-11-28')
 
-          echo $(echo $response | jq -r '.name')
-          
+          echo $response
+          echo $response | jq -r '.value'
       - name: ProcessStep1
         #if: ${{vars.process != 'process'}}
         run: |
