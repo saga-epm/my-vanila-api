@@ -38,15 +38,15 @@ jobs:
     needs: azure-login
 
     steps:
-      - name: Process1
-        if: ${{vars.process == true}}
-        run: |
-          echo "Process 1:" ${{ vars.process }}
-      - name: Process2
-        if: ${{vars.process != 'true'}}
-        run: |
-          echo "Process 2:" ${{ vars.process }}
-          exit 1
+      # - name: Process1
+      #   if: ${{vars.process == true}}
+      #   run: |
+      #     echo "Process 1:" ${{ vars.process }}
+      # - name: Process2
+      #   if: ${{vars.process != 'true'}}
+      #   run: |
+      #     echo "Process 2:" ${{ vars.process }}
+      #     exit 1
       - name: Process3
         if: ${{vars.process == 'true'}}
         run: |

@@ -1,82 +1,82 @@
-# print secrets
+# # print secrets
 
-name: secrets
+# name: secrets
 
-on:
-  workflow_dispatch:
+# on:
+#   workflow_dispatch:
 
-env:
-  foo: 'fooboo'
+# env:
+#   foo: 'fooboo'
   
-jobs:
+# jobs:
 
-  manual-approval:
-    name: Manual Approval
-    runs-on: ubuntu-latest
-    if: success() # Only proceed if terraform-plan job succeeds
+#   manual-approval:
+#     name: Manual Approval
+#     runs-on: ubuntu-latest
+#     if: success() # Only proceed if terraform-plan job succeeds
     
-    permissions:
-      issues: write
+#     permissions:
+#       issues: write
 
-    steps:
-      - name: Await Manual Approval
-        uses: trstringer/manual-approval@v1
-        with:
-          secret: ${{ github.TOKEN }}
-          approvers: 'saga-epm'
-          minimum-approvals: 1
-          issue-title: "Manual Approval Required for Terraform Apply"
-          issue-body: "Please approve or deny the deployment."         
+#     steps:
+#       - name: Await Manual Approval
+#         uses: trstringer/manual-approval@v1
+#         with:
+#           secret: ${{ github.TOKEN }}
+#           approvers: 'saga-epm'
+#           minimum-approvals: 1
+#           issue-title: "Manual Approval Required for Terraform Apply"
+#           issue-body: "Please approve or deny the deployment."         
 
-  # login to azure and deploy resources
-  view-secrets:
-    name: View Secrets
-    runs-on: ubuntu-latest
+#   # login to azure and deploy resources
+#   view-secrets:
+#     name: View Secrets
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v3
 
-      - name: Azure Login
-        uses: Azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }} # Define secret variable in repository settings as per action documentation
+#       - name: Azure Login
+#         uses: Azure/login@v1
+#         with:
+#           creds: ${{ secrets.AZURE_CREDENTIALS }} # Define secret variable in repository settings as per action documentation
 
-      - name: Get Key Vault Secrets
-        uses: Azure/get-keyvault-secrets@v1
-        with:
-          keyvault: "kv-xccelerate-sandbox"
-          secrets: 'sqlserver-admin-user, sqlserver-admin-password'
-        id: kvSecrets
+#       - name: Get Key Vault Secrets
+#         uses: Azure/get-keyvault-secrets@v1
+#         with:
+#           keyvault: "kv-xccelerate-sandbox"
+#           secrets: 'sqlserver-admin-user, sqlserver-admin-password'
+#         id: kvSecrets
 
-      - name: Use the Value
-        run: |
-          echo "${{ steps.kvSecrets.outputs['sqlserver-admin-user'] }}" | sed 's/./& /g' |
-          echo "${{ steps.kvSecrets.outputs['sqlserver-admin-password'] }}" | sed 's/./& /g'
+#       - name: Use the Value
+#         run: |
+#           echo "${{ steps.kvSecrets.outputs['sqlserver-admin-user'] }}" | sed 's/./& /g' |
+#           echo "${{ steps.kvSecrets.outputs['sqlserver-admin-password'] }}" | sed 's/./& /g'
 
-      - name: Login
-        run: az login --service-principal -u "${{ secrets.AZURE_CLIENT_ID }}" -p "${{ secrets.AZURE_CLIENT_SECRET }}" -t "${{ secrets.AZURE_TENANT_ID }}"
+#       - name: Login
+#         run: az login --service-principal -u "${{ secrets.AZURE_CLIENT_ID }}" -p "${{ secrets.AZURE_CLIENT_SECRET }}" -t "${{ secrets.AZURE_TENANT_ID }}"
 
-      - name: Azure CLI Script
-        id: step_one
-        uses: azure/CLI@v1
-        with:
-          inlineScript: |
-            echo secret=$(az keyvault secret show --vault-name kv-xccelerate-sandbox --name sqlserver-admin-user --query value --out tsv) >> $GITHUB_ENV
+#       - name: Azure CLI Script
+#         id: step_one
+#         uses: azure/CLI@v1
+#         with:
+#           inlineScript: |
+#             echo secret=$(az keyvault secret show --vault-name kv-xccelerate-sandbox --name sqlserver-admin-user --query value --out tsv) >> $GITHUB_ENV
 
-      - name: Use the Secret from CLI
-        id: step_two
-        run: |
-          echo "${{ env.secret }}"
+#       - name: Use the Secret from CLI
+#         id: step_two
+#         run: |
+#           echo "${{ env.secret }}"
 
-      - name: View Secrets Context
-        shell: bash
-        run: echo "$SECRETS_CONTEXT" | sed 's/./& /g'
-        env:
-          SECRETS_CONTEXT: ${{ toJson(secrets) }}
+#       - name: View Secrets Context
+#         shell: bash
+#         run: echo "$SECRETS_CONTEXT" | sed 's/./& /g'
+#         env:
+#           SECRETS_CONTEXT: ${{ toJson(secrets) }}
 
-      - name: View Variables Context
-        shell: bash
-        run: echo "$VARS_CONTEXT" | sed 's/./& /g'
-        env:
-          VARS_CONTEXT: ${{ toJson(vars) }}
+#       - name: View Variables Context
+#         shell: bash
+#         run: echo "$VARS_CONTEXT" | sed 's/./& /g'
+#         env:
+#           VARS_CONTEXT: ${{ toJson(vars) }}
