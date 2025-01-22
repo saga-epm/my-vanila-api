@@ -43,16 +43,24 @@ jobs:
           # echo "server:" ${{ env.SERVER }}
 
   check-step:
-    name: Check Process Step
+    name: step1
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     needs: azure-login
 
     steps:
-      - name: Process
-        #if: ${{vars.process != 'true'}}        
+      - name: Process1
+        if: ${{vars.process == true}}
         run: |
-          echo "Process Failed:" ${{ vars.process }}
+          echo "Process 1:" ${{ vars.process }}
+      - name: Process2
+        if: ${{vars.process == 'true'}}
+        run: |
+          echo "Process 2:" ${{ vars.process }}
+      - name: Process1
+        if: ${{1 == 0}}
+        run: |
+          echo "Process 3:" ${{ vars.process }}
           exit 1
 
   re-process-step:
