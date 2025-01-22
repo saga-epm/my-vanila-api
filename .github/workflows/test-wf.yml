@@ -72,17 +72,17 @@ jobs:
           echo "NODE_ENV_1=$(echo $response | jq -r '.value')" >> $GITHUB_ENV
           echo "foo-key=$(echo $response | jq -r '.value')" >> $GITHUB_OUTPUT
       - name: ProcessStep1
-        #if: ${{vars.process != 'process'}}
+        if: ${{steps.stepget.outputs.foo-key == 'bar'}}
         run: |
           echo $NODE_ENV
           echo $NODE_ENV_1
           echo "-----------------------------"
-          echo "Step1 Process:" ${{steps.stepget.outputs.foo-key}}
-          #exit 1
+          echo "Process Failed as it's bar':" ${{steps.stepget.outputs.foo-key}}
+          exit 1       
       - name: ProcessStep2
-        #if: ${{vars.process == 'process'}}
+        if: ${{steps.stepget.outputs.foo-key == 'process'}}
         run: |
-          echo "Step2 Process:" ${{ vars.process }}
+          echo "Process Success:" ${{ vars.process }}
 
   # Step2:
   #   name: Step2    
