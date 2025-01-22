@@ -50,7 +50,7 @@ jobs:
 
     steps:
       - name: Process
-        if: ${{vars.process != 'true'}}        
+        #if: ${{vars.process != 'true'}}        
         run: |
           echo "Process Failed:" ${{ vars.process }}
           exit 1
