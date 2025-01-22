@@ -69,10 +69,12 @@ jobs:
           echo $response
           echo $response | jq -r '.value'
           echo "NODE_ENV=production" >> $GITHUB_ENV
-          echo "foo-key=$response | jq -r '.value'" >> $GITHUB_OUTPUT
+          echo "foo-key=$($response | jq -r '.value')" >> $GITHUB_OUTPUT
       - name: ProcessStep1
         #if: ${{vars.process != 'process'}}
         run: |
+          echo $NODE_ENV
+          echo "-----------------------------"
           echo "Step1 Process:" ${{steps.stepget.outputs.foo-key}}
           #exit 1
       - name: ProcessStep2
