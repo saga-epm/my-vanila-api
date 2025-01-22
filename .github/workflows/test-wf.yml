@@ -43,7 +43,7 @@ jobs:
         --header 'Authorization: Bearer ${{ secrets.token }}' \
         --header 'X-GitHub-Api-Version: 2022-11-28' \
         --header 'Content-Type: application/json' \
-        --data '{"name":"'PROCESS_$(echo $GITHUB_SHA | cut -c 1-6)'","value":"'${{ inputs.value }}'"}'
+        --data '{"name":"'PROCESS_$(echo $GITHUB_SHA)'","value":"'${{ inputs.value }}'"}'
         
   deploy:
     name: Get Env Variable (${{ github.repository }})
