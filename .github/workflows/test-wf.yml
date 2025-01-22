@@ -56,7 +56,8 @@ jobs:
             --header 'Authorization: Bearer ${{ secrets.token }}' \
             --header 'X-GitHub-Api-Version: 2022-11-28')
 
-          PUBLIC_KEY=$(echo $response | jq -r '.key')                
+          PUBLIC_KEY=$(echo $response | jq -r '.name')          
+          echo "PUBLIC_KEY=PUBLIC_KEY" >> $GITHUB_ENV
           echo "public_key=$PUBLIC_KEY" >> $GITHUB_OUTPUT        
 
       - name: ProcessStep1
