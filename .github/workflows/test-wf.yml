@@ -38,20 +38,23 @@ jobs:
     
     steps:
       - name: ProcessStep1
-        if: ${{vars.process == 'true'}}
+        if: ${{vars.process == 'process'}}
         run: |
           echo "Step1 Process:" ${{ vars.process }}
 
   Step2:
     name: Step2
-    if: ${{vars.process == 'true'}}
-    runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
+    env:
+      process: ${{vars.process}}
+    if: ${{env.process == 'process'}}
+    runs-on: ubuntu-latest
+    
     needs: Step1
     #continue-on-error: true    
 
     steps:
-      - name: Process        
+      - name: ProcessStep2
         run: |
           echo "Step2 Process:" ${{ vars.process }}
         
