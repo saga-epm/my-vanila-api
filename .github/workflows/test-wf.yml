@@ -31,22 +31,19 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Create Env Variable (${{ github.repository }})
-      run: echo "GITHUB_PROCESS_SHA=PROCESS_$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
-    - name: Update environment variables 
       shell: bash
       run: |
+        echo "GITHUB_PROCESS_SHA=PROCESS_$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV    
         echo "--------------------"
-        echo ${{github.sha}}
+        echo PROCESS_$(echo $GITHUB_SHA | cut -c 1-6)
         echo "--------------------"
-        echo $GITHUB_SHA
-        echo "--------------------" 
-
+        
         curl --location 'https://api.github.com/repos/${{github.repository}}/environments/${{inputs.environment}}/variables' \
         --header 'Accept: application/vnd.github+json' \
         --header 'Authorization: Bearer ${{ secrets.token }}' \
         --header 'X-GitHub-Api-Version: 2022-11-28' \
         --header 'Content-Type: application/json' \
-        --data '{"name":"'$GITHUB_SHA'","value":"'${{ inputs.value }}'"}'
+        --data '{"name":"'$GITHUB_PROCESS_SHA'","value":"'${{ inputs.value }}'"}'
         
   deploy:
     name: Get Env Variable (${{ github.repository }})
@@ -65,7 +62,7 @@ jobs:
           echo "--------------------"
           echo $GITHUB_SHA
           echo "--------------------"
-          response=$(curl --location 'https://api.github.com/repos/${{github.repository}}/environments/${{inputs.environment}}/variables/FOO' \
+          response=$(curl --location 'https://api.github.com/repos/${{github.repository}}/environments/${{inputs.environment}}/variables/PROCESS_$(echo ${{github.sha}} | cut -c 1-6)' \
             --header 'Accept: application/vnd.github+json' \
             --header 'Authorization: Bearer ${{ secrets.token }}' \
             --header 'X-GitHub-Api-Version: 2022-11-28')
