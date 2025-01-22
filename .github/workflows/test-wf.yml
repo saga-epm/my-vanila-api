@@ -54,6 +54,11 @@ jobs:
       - name: Update environment variables 
         shell: bash
         run: |
+          echo "--------------------"
+          echo ${{github.sha}}
+          echo "--------------------"
+          echo $GITHUB_SHA
+          echo "--------------------"
           response=$(curl --location 'https://api.github.com/repos/${{github.repository}}/environments/${{inputs.environment}}/variables/$GITHUB_SHA' \
             --header 'Accept: application/vnd.github+json' \
             --header 'Authorization: Bearer ${{ secrets.token }}' \
