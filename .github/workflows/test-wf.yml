@@ -35,23 +35,27 @@ jobs:
     name: step1
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
-    
-    steps:
+    steps:      
       - name: ProcessStep1
-        if: ${{vars.process == 'process'}}
+        if: ${{vars.process != 'process'}}
         run: |
           echo "Step1 Process:" ${{ vars.process }}
-
-  Step2:
-    name: Step2    
-    if: ${{vars.process == 'process'}}
-    runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }}    
-    needs: Step1
-    #continue-on-error: true    
-
-    steps:
+          exit 1
       - name: ProcessStep2
+        if: ${{vars.process == 'process'}}
         run: |
           echo "Step2 Process:" ${{ vars.process }}
+
+  # Step2:
+  #   name: Step2    
+  #   if: step1.outputs.status == 'success'
+  #   runs-on: ubuntu-latest
+  #   environment: ${{ inputs.environment }}    
+  #   needs: Step1
+  #   #continue-on-error: true    
+
+  #   steps:
+  #     - name: ProcessStep2
+  #       run: |
+  #         echo "Step2 Process:" ${{ vars.process }}
         
