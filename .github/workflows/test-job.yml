@@ -17,6 +17,8 @@ jobs:
     uses: ./.github/workflows/test-wf.yml
     with:
       environment: test
+      name: 'foo'
+      value: 'bar'
     secrets:
-      server: ${{ secrets.REGISTRY_LOGIN_SERVER_ENV }}
+      token: ${{ secrets.token }}
     

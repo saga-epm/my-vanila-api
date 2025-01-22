@@ -7,10 +7,18 @@ on:
           required: true
           type: string
           description: 'Env Value'
+      name:
+          required: true
+          type: string
+          description: 'Name'
+      value:
+          required: true
+          type: string
+          description: 'Value'
     secrets:
-      server:
+      token:
         required: true        
-        description: 'Server to login to'
+        description: 'Token'
   
 jobs:
 
@@ -22,6 +30,20 @@ jobs:
       run: echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
     - name: Test
       run: echo $GITHUB_SHA_SHORT
+    - name: Update environment variables - ${{ github.repository }} and environment- ${{ github.event.inputs.environment }}
+      #if: ${{inputs.type_var_sec == 'environment' && inputs.type_of_input == 'variable'}}
+      shell: bash
+      run: |
+        curl -L \
+          -X PATCH \
+          -H "Accept: application/vnd.github+json" \
+          -H "Authorization: Bearer ${{ secrets.token }}"\
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          https://api.github.com/repositories/${{ github.repository_id }}/environments/${inputs.environment}/variables/${{ inputs.name }} \
+          -d '{"name":"'${{ inputs.name }}'","value":"'${{ inputs.value }}'"}'
+
+        echo "name=${{ inputs.name }}" >> $GITHUB_OUTPUT
+        echo "value=${{ inputs.value }}" >> $GITHUB_OUTPUT        
 
   # azure-login:
   #   name: Validation
@@ -44,6 +66,7 @@ jobs:
     name: step1
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
+    needs: build
     steps:      
       - name: ProcessStep1
         if: ${{vars.process != 'process'}}
@@ -67,4 +90,4 @@ jobs:
   #     - name: ProcessStep2
   #       run: |
   #         echo "Step2 Process:" ${{ vars.process }}
-        
+  
