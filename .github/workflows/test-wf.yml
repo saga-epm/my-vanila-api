@@ -57,7 +57,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     needs: check-step
-    if: ${{vars.process == 'true'}}
+    continue-on-error: true
+    #if: ${{vars.process == 'true'}}
 
     steps:
       - name: Process        
